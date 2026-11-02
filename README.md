@@ -1,7 +1,18 @@
-# Zyeta homepage concept
+# Zyeta website concept
 
-A design concept for a new Zyeta homepage, built as a static site. It is not the official Zyeta website: a label on every screen says so, and its contact and project links do not go anywhere.
+A design concept for a new Zyeta website. It is not the official Zyeta website: a label on every screen says so, the contact form sends nothing, and articles open on zyeta.com.
 
-Thirteen scroll-driven scenes: loader, hero, photo globe, featured projects, promise, track record, a 3D office floor that builds itself in seven stages, services, client voices, recognition, research, contact and footer.
+Live: https://cosmiclab-dev.github.io/zyeta-homepage-concept/
 
-Built with GSAP (ScrollTrigger, SplitText, CustomEase), Lenis and Three.js. No build step: open `index.html` through any static server.
+## Pages
+- Home: thirteen scroll-driven scenes, from the photo globe to the 3D office floor that builds itself.
+- Work, plus a page for each of five projects (LinkedIn, IFF, two for 7-Eleven, TDCX).
+- Services, plus a page for each of the six services.
+- Studio, Insights, Careers, Contact.
+
+## How it is built
+- Static HTML, CSS and JavaScript; no build step is needed to view it.
+- `build/build.py` generates the inner pages from `build/content.py` and keeps the navigation and footer of `index.html` in sync. After changing content, run `python3 build/build.py`.
+- Motion: GSAP (ScrollTrigger, SplitText, CustomEase), Lenis smooth scroll, Three.js for the globe and the fit-out model.
+- `js/shared.js`: page transitions, cursor labels, navigation, menu. `js/page.js`: inner-page motion. `js/app.js`: home.
+- Content is from zyeta.com and the earlier demo site. Reduced motion gives a still, fully readable site.

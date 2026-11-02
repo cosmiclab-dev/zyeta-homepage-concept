@@ -1,12 +1,15 @@
 // ZYETA: scroll choreography. One labelled timeline per scene, scrubbed by ScrollTrigger.
 import { createGlobe } from './globe.js';
 import { createFitout } from './fitout.js';
+import { transitions, cursor } from './shared.js';
 
 const { gsap, ScrollTrigger, SplitText, CustomEase } = window;
 gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
 CustomEase.create('zOut', '0.16,1,0.3,1');
 CustomEase.create('zInOut', '0.65,0,0.35,1');
 CustomEase.create('zMask', '0.77,0,0.175,1');
+transitions();
+cursor();
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -149,6 +152,7 @@ function start() {
     sceneProjects(desk, L);
     scenePromise(desk, L);
     sceneNumbers();
+    sceneClients();
     sceneFitout(desk, L);
     sceneServices(desk);
     sceneVoices(desk, L);
@@ -189,6 +193,7 @@ function setupPause() {
     state.paused = !state.paused; b.setAttribute('aria-pressed', state.paused); b.textContent = state.paused ? 'Play motion' : 'Pause motion';
     if (state.paused) v.pause(); else v.play().catch(() => {});
     state.globe && state.globe.setPaused(state.paused);
+    state.clientsLoop && (state.paused ? state.clientsLoop.pause() : state.clientsLoop.play());
   });
 }
 
@@ -375,6 +380,24 @@ function sceneNumbers() {
     const drift = innerWidth < 1024 ? 10 : 40;
     gsap.fromTo($('.nums__val', row), { y: drift }, { y: -drift, ease: 'none', scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
+}
+
+/* ---------------- clients: a band that drifts and leans with scroll speed ---------------- */
+function sceneClients() {
+  const track = $('.clients__track'); if (!track || track._loop) return;
+  const loop = gsap.to(track, { xPercent: -50, duration: 38, ease: 'none', repeat: -1 });
+  track._loop = loop;
+  const skew = gsap.quickTo(track, 'skewX', { duration: 0.6, ease: 'power3' });
+  ScrollTrigger.create({ trigger: '.clients', start: 'top bottom', end: 'bottom top',
+    onUpdate: (s) => {
+      const v = s.getVelocity();
+      skew(Math.max(-5, Math.min(5, v / -500)));
+      gsap.to(loop, { timeScale: Math.min(5, 1 + Math.abs(v) / 400) * (s.direction || 1), duration: 0.2, overwrite: true });
+      gsap.to(loop, { timeScale: 1, duration: 1.4, delay: 0.25 });
+    },
+    onToggle: (s) => { if (!s.isActive) skew(0); } });
+  gsap.fromTo('.clients__k', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: 'zOut', scrollTrigger: { trigger: '.clients', start: 'top 85%' } });
+  state.clientsLoop = loop;
 }
 
 /* ---------------- SCENE 06: fit-out ---------------- */

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" class="no-motion">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact | Zyeta Concept</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Send Zyeta your floor, headcount and date.">
+<meta name="theme-color" content="#1F2B27">
+<link rel="preload" as="font" href="media/UntitledSans-Regular.ttf" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="css/site.css?v=7">
+<link rel="stylesheet" href="css/pages.css?v=7">
+<script>
+  (function () {
+    var d = document.documentElement, rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    d.classList.add(rm ? 'no-motion' : 'motion'); d.classList.remove(rm ? 'motion' : 'no-motion');
+    try {
+      if (sessionStorage.getItem('zy-loaded')) d.classList.add('seen');
+      if (!rm && sessionStorage.getItem('zy-pt')) { d.classList.add('pt-in'); setTimeout(function () { d.classList.remove('pt-in'); }, 2500); }
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body class="inner" data-page="contact">
+<a class="skip" href="#main">Skip to content</a>
+<p class="concept" role="note">Design concept. Not the official Zyeta website.</p>
+<div class="cols" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div class="progress" aria-hidden="true"></div>
+<div class="pt" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<!-- nav -->
+<header class="nav" data-theme="dark">
+  <a class="nav__mark" href="index.html" aria-label="Zyeta, home">ZYETA</a>
+  <nav class="nav__links" aria-label="Main"><a href="work.html"><span data-roll-text>Work</span></a><a href="services.html"><span data-roll-text>Services</span></a><a href="studio.html"><span data-roll-text>Studio</span></a><a href="insights.html"><span data-roll-text>Insights</span></a><a href="careers.html"><span data-roll-text>Careers</span></a><a href="contact.html" aria-current="page"><span data-roll-text>Contact</span></a></nav>
+  <div class="nav__end">
+    
+    <a class="btn btn--pill nav__cta" href="contact.html#brief">Send a brief</a>
+    <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu"><a href="index.html">Home</a><a href="work.html">Work</a><a href="services.html">Services</a><a href="studio.html">Studio</a><a href="insights.html">Insights</a><a href="careers.html">Careers</a><a href="contact.html">Contact</a></nav>
+  <p class="menu__offices">Bengaluru, Chennai, Delhi NCR, Ahmedabad, Hyderabad, Kochi, Mumbai, Pune, Singapore, Kuala Lumpur, Hong Kong, Taipei</p>
+</div>
+<!-- /nav -->
+<main id="main">
+<section class="ph ph--contact" data-theme="light">
+  <div class="ph__inner">
+    <p class="ph__crumb small">Contact</p>
+    <h1 class="ph__title display" data-split>Send the floor, the headcount and the date.</h1>
+    <p class="ph__sub subtitle" data-lines>A Client Success Officer replies to every enquiry within one working day.</p>
+  </div>
+</section>
+<section class="form" id="brief" data-theme="dark" aria-labelledby="form-h">
+  <div class="form__side">
+    <h2 class="title" id="form-h" data-lines>Tell us about the floor</h2>
+    <p>Call <span class="tnum">+91 63645 99441</span>, any time.</p>
+  </div>
+  <form class="form__f" novalidate>
+    <div class="fld"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" required></div>
+    <div class="fld"><label for="f-email">Business email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+    <div class="fld"><label for="f-company">Company</label><input id="f-company" name="company" autocomplete="organization"></div>
+    <div class="fld"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+    <div class="fld"><label for="f-service">Type of service</label><select id="f-service" name="service"><option>Design and Build</option><option>Design Consultancy</option><option>Workplace Strategy</option><option>WELL Consultation</option><option>WELL Health-Safety Rating</option><option>Sustainability Consultancy</option></select></div>
+    <div class="fld"><label for="f-size">Project area (sq ft)</label><select id="f-size" name="size"><option>15,000 to 30,000</option><option>31,000 to 50,000</option><option>51,000 and above</option></select></div>
+    <div class="fld"><label for="f-loc">Location</label><select id="f-loc" name="location"><option>Bengaluru</option><option>Chennai</option><option>Delhi NCR</option><option>Ahmedabad</option><option>Hyderabad</option><option>Kochi</option><option>Mumbai</option><option>Pune</option><option>Singapore</option><option>Kuala Lumpur</option><option>Hong Kong</option><option>Taipei</option><option>Other</option></select></div>
+    <div class="fld"><label for="f-head">Headcount and move-in date</label><input id="f-head" name="headcount" placeholder="For example, 600 people by June"></div>
+    <div class="form__end">
+      <button class="btn btn--big" type="submit">Send the brief</button>
+      <p class="form__msg" role="status" hidden>This is a design concept, so nothing was sent. To reach Zyeta, use the form on <a href="https://www.zyeta.com/contact/" target="_blank" rel="noopener">zyeta.com</a>.</p>
+    </div>
+  </form>
+</section>
+<section class="offices" data-theme="light" aria-labelledby="off-h">
+  <h2 class="title" id="off-h" data-lines>Studios</h2>
+  <ul class="offices__list" data-rules><li><span class="subtitle">Bengaluru</span><span>Ashok Nagar, India</span><span class="tnum">+91 63645 99441</span><span class="small locs__t" data-tz="Asia/Kolkata"></span></li><li><span class="subtitle">Chennai</span><span>Mylapore, India</span><span class="tnum">+91 63645 99441</span><span class="small locs__t" data-tz="Asia/Kolkata"></span></li><li><span class="subtitle">Delhi NCR</span><span>Udyog Vihar, Gurugram, India</span><span class="tnum">+91 95606 40078</span><span class="small locs__t" data-tz="Asia/Kolkata"></span></li><li><span class="subtitle">Ahmedabad</span><span>Ambli, India</span><span class="tnum">+91 95606 40078</span><span class="small locs__t" data-tz="Asia/Kolkata"></span></li><li><span class="subtitle">Hyderabad</span><span>Madhapur, India</span><span class="tnum">+91 63645 99441</span><span class="small locs__t" data-tz="Asia/Kolkata"></span></li><li><span class="subtitle">Kochi</span><span>Kakkanad, India</span><span class="tnum">+91 63645 99441</span><span class="small locs__t" data-tz="Asia/Kolkata"></span></li><li><span class="subtitle">Mumbai</span><span>Powai, India</span><span class="tnum">+91 63645 99441</span><span class="small locs__t" data-tz="Asia/Kolkata"></span></li><li><span class="subtitle">Pune</span><span>Koregaon Park, India</span><span class="tnum">+91 63645 99441</span><span class="small locs__t" data-tz="Asia/Kolkata"></span></li><li><span class="subtitle">Singapore</span><span>Orchard Road, Singapore</span><span class="tnum">+65 9667 8801</span><span class="small locs__t" data-tz="Asia/Singapore"></span></li><li><span class="subtitle">Kuala Lumpur</span><span>Bangsar South, Malaysia</span><span class="tnum">+60 111 627 6197</span><span class="small locs__t" data-tz="Asia/Kuala_Lumpur"></span></li><li><span class="subtitle">Hong Kong</span><span>Tsim Sha Tsui, Hong Kong</span><span class="tnum">+65 9667 8801</span><span class="small locs__t" data-tz="Asia/Hong_Kong"></span></li><li><span class="subtitle">Taipei</span><span>Xinyi District, Taiwan</span><span class="tnum">+65 9667 8801</span><span class="small locs__t" data-tz="Asia/Taipei"></span></li></ul>
+</section>
+<section class="acc" data-theme="light" aria-labelledby="faq-h">
+  <h2 class="title" id="faq-h" data-lines>Questions buyers ask first</h2>
+  <ul class="acc__list"><li class="acc__item"><h3><button type="button" aria-expanded="false" id="faq-0-b" aria-controls="faq-0"><span class="subtitle">Do you handle statutory approvals and compliance?</span><i aria-hidden="true"></i></button></h3><div class="acc__p" id="faq-0" role="region" aria-labelledby="faq-0-b"><div><p>Yes. Approvals, compliance and regulatory coordination are handled within project scope across India and APAC, including local codes, fire safety and EHS standards.</p></div></div></li><li class="acc__item"><h3><button type="button" aria-expanded="false" id="faq-1-b" aria-controls="faq-1"><span class="subtitle">We have global standards to follow. Can you align with our HQ&#x27;s guidelines?</span><i aria-hidden="true"></i></button></h3><div class="acc__p" id="faq-1" role="region" aria-labelledby="faq-1-b"><div><p>Yes. Zyeta runs workshops to understand your HQ standards, builds a custom design playbook, and adapts the global brand to local regulations.</p></div></div></li><li class="acc__item"><h3><button type="button" aria-expanded="false" id="faq-2-b" aria-controls="faq-2"><span class="subtitle">Will I have a dedicated point of contact during the project?</span><i aria-hidden="true"></i></button></h3><div class="acc__p" id="faq-2" role="region" aria-labelledby="faq-2-b"><div><p>Yes. A Client Success Officer is assigned at kickoff and handles communication, progress updates and escalation.</p></div></div></li><li class="acc__item"><h3><button type="button" aria-expanded="false" id="faq-3-b" aria-controls="faq-3"><span class="subtitle">Do you have an in-house team across locations?</span><i aria-hidden="true"></i></button></h3><div class="acc__p" id="faq-3" role="region" aria-labelledby="faq-3-b"><div><p>Yes. In-house teams work from India, Singapore, Taiwan, Hong Kong and Malaysia, with partner studios and real estate professionals in the UK, Europe and elsewhere.</p></div></div></li><li class="acc__item"><h3><button type="button" aria-expanded="false" id="faq-4-b" aria-controls="faq-4"><span class="subtitle">How do you build sustainability into workplace design?</span><i aria-hidden="true"></i></button></h3><div class="acc__p" id="faq-4" role="region" aria-labelledby="faq-4-b"><div><p>Through Zyeta PURE, the sustainability division: WELL, LEED and IGBC certified spaces, carbon tracking, and post-occupancy reporting led by accredited experts.</p></div></div></li><li class="acc__item"><h3><button type="button" aria-expanded="false" id="faq-5-b" aria-controls="faq-5"><span class="subtitle">How long does an office design and build project take?</span><i aria-hidden="true"></i></button></h3><div class="acc__p" id="faq-5" role="region" aria-labelledby="faq-5-b"><div><p>About 45 days under ideal conditions. Timelines change with scope and complexity.</p></div></div></li><li class="acc__item"><h3><button type="button" aria-expanded="false" id="faq-6-b" aria-controls="faq-6"><span class="subtitle">What industries do you design for?</span><i aria-hidden="true"></i></button></h3><div class="acc__p" id="faq-6" role="region" aria-labelledby="faq-6-b"><div><p>Workplaces of every kind, plus life sciences laboratories built to GMP, ISO, NABL and EHS standards.</p></div></div></li><li class="acc__item"><h3><button type="button" aria-expanded="false" id="faq-7-b" aria-controls="faq-7"><span class="subtitle">Can you work with existing buildings?</span><i aria-hidden="true"></i></button></h3><div class="acc__p" id="faq-7" role="region" aria-labelledby="faq-7-b"><div><p>Yes. Zyeta retrofits, revamps, extends and renovates existing workspaces as well as building new ones.</p></div></div></li><li class="acc__item"><h3><button type="button" aria-expanded="false" id="faq-8-b" aria-controls="faq-8"><span class="subtitle">How do you keep projects on time and on budget?</span><i aria-hidden="true"></i></button></h3><div class="acc__p" id="faq-8" role="region" aria-labelledby="faq-8-b"><div><p>Budgets are locked early through detailed planning and vendor commitments. Progress is tracked with governance frameworks and dashboards, and BIM and digital twin tools monitor time and cost.</p></div></div></li></ul>
+</section>
+</main>
+<!-- footer -->
+<footer class="foot" data-theme="dark">
+  
+  <div class="foot__grid">
+    <div><h2 class="small">Studio</h2><p>138, Field Marshal Cariappa Rd<br>Shanthala Nagar, Ashok Nagar<br>Bengaluru, Karnataka 560025</p><p class="foot__tel">+91 63645 99441</p></div>
+    <div><h2 class="small">Services</h2><ul><li><a href="services/design-and-build.html">Design and Build</a></li><li><a href="services/design-consultancy.html">Design Consultancy</a></li><li><a href="services/workplace-strategy.html">Workplace Strategy</a></li><li><a href="services/well-consultation.html">WELL Consultation</a></li><li><a href="services/well-health-safety-rating.html">WELL Health-Safety Rating</a></li><li><a href="services/sustainability-consultancy.html">Sustainability Consultancy</a></li></ul></div>
+    <div><h2 class="small">Explore</h2><ul><li><a href="work.html">Work</a></li><li><a href="studio.html">Studio</a></li><li><a href="insights.html">Insights</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h2 class="small">Locations</h2><p>Bengaluru, Chennai, Delhi NCR, Ahmedabad, Hyderabad, Kochi, Mumbai, Pune, Singapore, Kuala Lumpur, Hong Kong, Taipei</p></div>
+    <div><h2 class="small">Follow</h2><ul><li><a href="https://www.linkedin.com/company/9431681/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/zyeta_official/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.youtube.com/channel/UCQvUrmPI_JJtdvjoc7bY1pQ" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://zyeta.medium.com/" target="_blank" rel="noopener">Medium</a></li></ul></div>
+    <div><h2 class="small">Official site</h2><ul><li><a href="https://www.zyeta.com/" target="_blank" rel="noopener">zyeta.com</a></li><li><a href="https://www.zyeta.com/privacy-policy/" target="_blank" rel="noopener">Privacy policy</a></li><li><a href="https://www.zyeta.com/terms-and-conditions/" target="_blank" rel="noopener">Terms</a></li></ul></div>
+  </div>
+  <p class="foot__word" aria-hidden="true"><span>Z</span><span>Y</span><span>E</span><span>T</span><span>A</span></p>
+  <div class="foot__base small"><p>Design concept for Zyeta, 2026</p><a href="#main" class="foot__top">Back to top</a></div>
+</footer>
+<!-- /footer -->
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/CustomEase.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script type="module" src="js/page.js?v=7"></script>
+</body>
+</html>

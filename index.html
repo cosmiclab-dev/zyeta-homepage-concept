@@ -5,17 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Zyeta Homepage Concept</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Zyeta designs and builds workplaces across India and APAC under one contract. 15 million square feet delivered.">
+<meta name="description" content="Zyeta designs and builds workplaces across India and APAC under one contract. 27 million square feet delivered.">
 <meta name="theme-color" content="#1F2B27">
 <link rel="preload" as="image" href="media/img/hero-broll-poster.webp">
 <link rel="preload" as="font" href="media/UntitledSans-Regular.ttf" type="font/ttf" crossorigin>
-<link rel="stylesheet" href="css/site.css?v=5">
+<link rel="stylesheet" href="css/site.css?v=7">
 <script>
-  // Motion is on unless the visitor asked for less. Without JS the page stays a still, readable document.
   (function () {
-    var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!rm) { document.documentElement.classList.replace('no-motion', 'motion'); }
-    try { if (sessionStorage.getItem('zy-loaded')) document.documentElement.classList.add('seen'); } catch (e) {}
+    var d = document.documentElement, rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    d.classList.add(rm ? 'no-motion' : 'motion'); d.classList.remove(rm ? 'motion' : 'no-motion');
+    try {
+      if (sessionStorage.getItem('zy-loaded')) d.classList.add('seen');
+      if (!rm && sessionStorage.getItem('zy-pt')) { d.classList.add('pt-in'); setTimeout(function () { d.classList.remove('pt-in'); }, 2500); }
+    } catch (e) {}
   })();
 </script>
 </head>
@@ -30,6 +32,7 @@
 <!-- setting-out grid: the 12 column lines -->
 <div class="cols" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 <div class="progress" aria-hidden="true"></div>
+<div class="pt" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <!-- SCENE 00 LOADER -->
 <div class="loader" aria-hidden="true">
@@ -47,36 +50,25 @@
     <img src="media/thumb/tdcxasiasleadingdigitaltransformat-3.webp" alt="">
     <img src="media/thumb/portfolio-1.webp" alt="">
   </div>
-  <p class="loader__count"><span class="roll" data-roll="15,000,000">15,000,000</span> sq ft delivered</p>
+  <p class="loader__count"><span class="roll" data-roll="27,000,000">27,000,000</span> sq ft delivered</p>
   <img class="loader__full" src="media/img/hero-broll-poster.webp" alt="">
 </div>
 
+<!-- nav -->
 <header class="nav" data-theme="dark">
-  <a class="nav__mark" href="#main" aria-label="Zyeta, back to top">ZYETA</a>
-  <nav class="nav__links" aria-label="Main">
-    <a href="#work"><span data-roll-text>Work</span></a>
-    <a href="#services"><span data-roll-text>Services</span></a>
-    <a href="#fitout"><span data-roll-text>How we build</span></a>
-    <a href="#research"><span data-roll-text>Insights</span></a>
-    <a href="#contact"><span data-roll-text>Contact</span></a>
-  </nav>
+  <a class="nav__mark" href="index.html" aria-label="Zyeta, home">ZYETA</a>
+  <nav class="nav__links" aria-label="Main"><a href="work.html"><span data-roll-text>Work</span></a><a href="services.html"><span data-roll-text>Services</span></a><a href="studio.html"><span data-roll-text>Studio</span></a><a href="insights.html"><span data-roll-text>Insights</span></a><a href="careers.html"><span data-roll-text>Careers</span></a><a href="contact.html"><span data-roll-text>Contact</span></a></nav>
   <div class="nav__end">
     <button class="nav__pause" type="button" aria-pressed="false" data-pause>Pause motion</button>
-    <a class="btn btn--pill nav__cta" href="#contact">Send a brief</a>
+    <a class="btn btn--pill nav__cta" href="contact.html#brief">Send a brief</a>
     <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
   </div>
 </header>
-
 <div class="menu" id="menu" hidden>
-  <nav aria-label="Menu">
-    <a href="#work">Work</a>
-    <a href="#services">Services</a>
-    <a href="#fitout">How we build</a>
-    <a href="#research">Insights</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <p class="menu__offices">Bengaluru, Chennai, Delhi NCR, Ahmedabad, Hyderabad, Kochi, Mumbai, Pune, Singapore, Kuala Lumpur, Hong Kong, Taiwan</p>
+  <nav aria-label="Menu"><a href="index.html">Home</a><a href="work.html">Work</a><a href="services.html">Services</a><a href="studio.html">Studio</a><a href="insights.html">Insights</a><a href="careers.html">Careers</a><a href="contact.html">Contact</a></nav>
+  <p class="menu__offices">Bengaluru, Chennai, Delhi NCR, Ahmedabad, Hyderabad, Kochi, Mumbai, Pune, Singapore, Kuala Lumpur, Hong Kong, Taipei</p>
 </div>
+<!-- /nav -->
 
 <main id="main">
 
@@ -91,7 +83,7 @@
       </video>
     </div>
     <h1 class="hero__title giant"><span class="line">Workplace design</span> <span class="line">and build</span></h1>
-    <p class="hero__sub">15 million square feet delivered across India and APAC</p>
+    <p class="hero__sub">27 million square feet delivered across India and APAC</p>
   </div>
 </section>
 
@@ -127,7 +119,7 @@
       <p class="giant">IFF</p>
       <p class="giant">7-Eleven</p>
     </div>
-    <div class="proj__frame">
+    <div class="proj__frame" data-cursor="View">
       <img src="media/img/linkedinbengaluruworkplacedesign-1.webp" alt="LinkedIn Bengaluru reception with low red sofas under a lit ceiling">
       <img src="media/img/iffhyderabad-2.webp" alt="IFF Hyderabad, an open floor with a bright staircase and planted desks">
       <img src="media/img/7elevenphase2-3.webp" alt="7-Eleven Bengaluru, a red meeting room under a ring light">
@@ -137,19 +129,19 @@
         <h3 class="subtitle">Magnetic Metamorphosis</h3>
         <p class="small">LinkedIn, Bengaluru, 2025</p>
         <p class="small">Reception, work neighbourhoods and a full-height mural</p>
-        <a class="link" href="#" data-concept>See the project</a>
+        <a class="link" href="work/linkedin-bengaluru.html">See the project</a>
       </li>
       <li class="proj__item" data-bg="#4B4A43">
         <h3 class="subtitle">A sensescape where science inhabits spatial poetry</h3>
         <p class="small">IFF Global Business Services, Hyderabad, 2025</p>
         <p class="small">75,000 square feet for 600+ people</p>
-        <a class="link" href="#" data-concept>See the project</a>
+        <a class="link" href="work/iff-hyderabad.html">See the project</a>
       </li>
       <li class="proj__item" data-bg="#4A1D1F">
         <h3 class="subtitle">Cars of 7-Eleven</h3>
         <p class="small">7-Eleven Global Solution Centre, Bengaluru, 2025</p>
         <p class="small">Second facility for the same client</p>
-        <a class="link" href="#" data-concept>See the project</a>
+        <a class="link" href="work/seven-eleven-phase-2.html">See the project</a>
       </li>
     </ol>
     <p class="proj__count small" aria-hidden="true"><span class="proj__n">1</span> of 3<span class="proj__bar"><i></i></span></p>
@@ -176,11 +168,17 @@
 <!-- SCENE 05 NUMBERS -->
 <section class="nums" data-theme="light" aria-label="Track record">
   <ul class="nums__list">
-    <li class="nums__row"><p class="nums__label">Square feet delivered</p><p class="nums__val giant"><span class="roll" data-roll="15">15</span>M+</p></li>
+    <li class="nums__row"><p class="nums__label">Square feet delivered</p><p class="nums__val giant"><span class="roll" data-roll="27">27</span>M+</p></li>
     <li class="nums__row"><p class="nums__label">Cost accuracy with BIM</p><p class="nums__val giant"><span class="roll" data-roll="80">80</span>%</p></li>
     <li class="nums__row"><p class="nums__label">Square feet of LEED and WELL certified projects</p><p class="nums__val giant"><span class="roll" data-roll="2">2</span>M+</p></li>
     <li class="nums__row"><p class="nums__label">Worldwide, Giants of Design Survey 2026</p><p class="nums__val giant">#<span class="roll" data-roll="3">3</span></p></li>
   </ul>
+</section>
+
+<!-- CLIENTS -->
+<section class="clients" data-theme="light" aria-label="Clients">
+  <p class="clients__k small">Floors handed over to</p>
+  <div class="clients__band"><div class="clients__track display"><div class="clients__set"><span>LinkedIn</span><i aria-hidden="true"></i><span>7-Eleven</span><i aria-hidden="true"></i><span>IFF</span><i aria-hidden="true"></i><span>TDCX</span><i aria-hidden="true"></i><span>MediaTek</span><i aria-hidden="true"></i><span>SMC Squared</span><i aria-hidden="true"></i><span>Druva</span><i aria-hidden="true"></i><span>Harbinger Group</span><i aria-hidden="true"></i></div><div class="clients__set" aria-hidden="true"><span>LinkedIn</span><i aria-hidden="true"></i><span>7-Eleven</span><i aria-hidden="true"></i><span>IFF</span><i aria-hidden="true"></i><span>TDCX</span><i aria-hidden="true"></i><span>MediaTek</span><i aria-hidden="true"></i><span>SMC Squared</span><i aria-hidden="true"></i><span>Druva</span><i aria-hidden="true"></i><span>Harbinger Group</span><i aria-hidden="true"></i></div></div></div>
 </section>
 
 <!-- SCENE 06 FIT-OUT -->
@@ -230,27 +228,27 @@
       <p class="svc__tag small"><span>Design and Build</span></p>
     </div>
     <ul class="svc__list">
-      <li class="svc__item"><a href="#" data-concept>
+      <li class="svc__item"><a href="services/design-and-build.html" data-cursor="Read">
         <h3 class="title">Design and Build</h3>
         <div class="svc__more"><p>One team, from first drawing to handover. Strategy and space planning through MEP and networking design to build, furniture and commissioning, with one Client Success Officer from kickoff to handover.</p><p class="svc__stat">45 days standard turnaround under ideal conditions</p></div>
       </a></li>
-      <li class="svc__item"><a href="#" data-concept>
+      <li class="svc__item"><a href="services/design-consultancy.html" data-cursor="Read">
         <h3 class="title">Design Consultancy</h3>
         <div class="svc__more"><p>Workspaces that command growth. Design thinking combined with a regional reading of how each market works, turned into a workplace that carries the brand across locations.</p></div>
       </a></li>
-      <li class="svc__item"><a href="#" data-concept>
+      <li class="svc__item"><a href="services/workplace-strategy.html" data-cursor="Read">
         <h3 class="title">Workplace Strategy</h3>
         <div class="svc__more"><p>The evidence before the drawing. Change management after mergers, utilisation studies, hybrid patterns, and the safety and space questions boards now ask first.</p><p class="svc__stat">186+ workplace projects delivered</p></div>
       </a></li>
-      <li class="svc__item"><a href="#" data-concept>
+      <li class="svc__item"><a href="services/well-consultation.html" data-cursor="Read">
         <h3 class="title">WELL Consultation</h3>
         <div class="svc__more"><p>Health designed in, then certified. In-house WELL Accredited Professionals build the WELL standard into the design and stay from registration to the rating.</p></div>
       </a></li>
-      <li class="svc__item"><a href="#" data-concept>
+      <li class="svc__item"><a href="services/well-health-safety-rating.html" data-cursor="Read">
         <h3 class="title">WELL Health-Safety Rating</h3>
         <div class="svc__more"><p>A floor people will come back to. Wellbeing policy, stakeholder engagement, air and water quality, and the documentation behind each claim, taken end to end.</p></div>
       </a></li>
-      <li class="svc__item"><a href="#" data-concept>
+      <li class="svc__item"><a href="services/sustainability-consultancy.html" data-cursor="Read">
         <h3 class="title">Sustainability Consultancy</h3>
         <div class="svc__more"><p>Net zero made an engineering problem. Green building certification, life cycle assessment, embodied carbon tracking, and the energy, water and waste programmes that follow occupancy.</p></div>
       </a></li>
@@ -309,11 +307,11 @@
       <img src="media/img/carbon-neutral-gcc-office.webp" alt="An open lounge with low sofas and planting" loading="lazy">
     </div>
     <ol class="res__list">
-      <li><a href="#" data-concept><p class="small">Global capability centres, 2026</p><h3 class="subtitle">Global capability centres in Asia</h3><p>What a business-ready AI GCC workplace looks like, and what the platform, model and workplace decisions have to agree on first.</p><span class="link">Read the report</span></a></li>
-      <li><a href="#" data-concept><p class="small">Technology, 2026</p><h3 class="subtitle">Is your workplace AI-ready?</h3><p>AI adoption in Indian corporate real estate moved from under 5 per cent in 2023 to 91 per cent in 2025. Most floors were not built for it.</p><span class="link">Read the report</span></a></li>
-      <li><a href="#" data-concept><p class="small">Sustainability, 2026</p><h3 class="subtitle">A carbon-neutral GCC office</h3><p>Nearly one in two square feet of Grade A office space leased in India this year will be leased with a carbon commitment attached.</p><span class="link">Read the report</span></a></li>
+      <li><a href="https://www.zyeta.com/blogs/how-can-gccs-in-asia-set-up-efficient-business-ready-product-and-ai-development-hubs/" target="_blank" rel="noopener"><p class="small">Global capability centres, 2026</p><h3 class="subtitle">Global capability centres in Asia</h3><p>What a business-ready AI GCC workplace looks like, and what the platform, model and workplace decisions have to agree on first.</p><span class="link">Read the report</span></a></li>
+      <li><a href="https://www.zyeta.com/blogs/ai-ready-workplace/" target="_blank" rel="noopener"><p class="small">Technology, 2026</p><h3 class="subtitle">Is your workplace AI-ready?</h3><p>AI adoption in Indian corporate real estate moved from under 5 per cent in 2023 to 91 per cent in 2025. Most floors were not built for it.</p><span class="link">Read the report</span></a></li>
+      <li><a href="https://www.zyeta.com/blogs/07-design-strategies-you-need-to-build-a-carbon-neutral-gcc-office/" target="_blank" rel="noopener"><p class="small">Sustainability, 2026</p><h3 class="subtitle">A carbon-neutral GCC office</h3><p>Nearly one in two square feet of Grade A office space leased in India this year will be leased with a carbon commitment attached.</p><span class="link">Read the report</span></a></li>
     </ol>
-    <a class="link res__all" href="#" data-concept>Read all twelve reports</a>
+    <a class="link res__all" href="insights.html">Read all twelve reports</a>
   </div>
 </section>
 
@@ -325,8 +323,8 @@
       <h2 class="display" id="contact-title"><span class="line">Send the floor,</span> <span class="line">the headcount</span> <span class="line">and the date.</span></h2>
       <p class="contact__line">A Client Success Officer replies to every enquiry within one working day.</p>
       <div class="contact__acts">
-        <a class="btn btn--big" href="#" data-concept data-magnet><span>Send a brief</span></a>
-        <a class="link contact__tel" href="#" data-concept>Call +91 63645 99441</a>
+        <a class="btn btn--big" href="contact.html#brief" data-magnet><span>Send a brief</span></a>
+        <a class="link contact__tel" href="contact.html">Call +91 63645 99441</a>
       </div>
     </div>
   </div>
@@ -334,25 +332,27 @@
 
 </main>
 
-<!-- SCENE 12 FOOTER -->
+<!-- footer -->
 <footer class="foot" data-theme="dark">
+  
   <div class="foot__grid">
-    <div><h2 class="small">Studio</h2><p>138, Field Marshal Cariappa Rd<br>Shanthala Nagar, Ashok Nagar<br>Bengaluru, Karnataka 560025</p></div>
-    <div><h2 class="small">Contact</h2><p><a href="#" data-concept>+91 63645 99441</a></p><p><a href="#" data-concept>Send a brief</a></p></div>
-    <div><h2 class="small">Locations</h2><p>Bengaluru, Chennai, Delhi NCR, Ahmedabad, Hyderabad, Kochi, Mumbai, Pune, Singapore, Kuala Lumpur, Hong Kong, Taiwan</p></div>
-    <div><h2 class="small">Follow</h2><ul><li><a href="#" data-concept>LinkedIn</a></li><li><a href="#" data-concept>Instagram</a></li><li><a href="#" data-concept>YouTube</a></li><li><a href="#" data-concept>Pinterest</a></li></ul></div>
-    <div><h2 class="small">Explore</h2><ul><li><a href="#" data-concept>Projects</a></li><li><a href="#" data-concept>Services</a></li><li><a href="#" data-concept>Why Zyeta</a></li><li><a href="#" data-concept>Careers</a></li><li><a href="#" data-concept>Work Vantage podcast</a></li></ul></div>
-    <div><h2 class="small">Legal</h2><ul><li><a href="#" data-concept>Privacy policy</a></li><li><a href="#" data-concept>Terms</a></li></ul></div>
+    <div><h2 class="small">Studio</h2><p>138, Field Marshal Cariappa Rd<br>Shanthala Nagar, Ashok Nagar<br>Bengaluru, Karnataka 560025</p><p class="foot__tel">+91 63645 99441</p></div>
+    <div><h2 class="small">Services</h2><ul><li><a href="services/design-and-build.html">Design and Build</a></li><li><a href="services/design-consultancy.html">Design Consultancy</a></li><li><a href="services/workplace-strategy.html">Workplace Strategy</a></li><li><a href="services/well-consultation.html">WELL Consultation</a></li><li><a href="services/well-health-safety-rating.html">WELL Health-Safety Rating</a></li><li><a href="services/sustainability-consultancy.html">Sustainability Consultancy</a></li></ul></div>
+    <div><h2 class="small">Explore</h2><ul><li><a href="work.html">Work</a></li><li><a href="studio.html">Studio</a></li><li><a href="insights.html">Insights</a></li><li><a href="careers.html">Careers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h2 class="small">Locations</h2><p>Bengaluru, Chennai, Delhi NCR, Ahmedabad, Hyderabad, Kochi, Mumbai, Pune, Singapore, Kuala Lumpur, Hong Kong, Taipei</p></div>
+    <div><h2 class="small">Follow</h2><ul><li><a href="https://www.linkedin.com/company/9431681/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/zyeta_official/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.youtube.com/channel/UCQvUrmPI_JJtdvjoc7bY1pQ" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://zyeta.medium.com/" target="_blank" rel="noopener">Medium</a></li></ul></div>
+    <div><h2 class="small">Official site</h2><ul><li><a href="https://www.zyeta.com/" target="_blank" rel="noopener">zyeta.com</a></li><li><a href="https://www.zyeta.com/privacy-policy/" target="_blank" rel="noopener">Privacy policy</a></li><li><a href="https://www.zyeta.com/terms-and-conditions/" target="_blank" rel="noopener">Terms</a></li></ul></div>
   </div>
   <p class="foot__word" aria-hidden="true"><span>Z</span><span>Y</span><span>E</span><span>T</span><span>A</span></p>
-  <div class="foot__base small"><p>&copy; Zyeta 2026</p><a href="#main" class="foot__top">Back to top</a></div>
+  <div class="foot__base small"><p>Design concept for Zyeta, 2026</p><a href="#main" class="foot__top">Back to top</a></div>
 </footer>
+<!-- /footer -->
 
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/SplitText.min.js"></script>
 <script src="vendor/CustomEase.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
-<script type="module" src="js/app.js?v=5"></script>
+<script type="module" src="js/app.js?v=7"></script>
 </body>
 </html>
