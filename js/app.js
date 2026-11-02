@@ -161,6 +161,8 @@ function start() {
     sceneContact(desk, L);
     sceneFooter();
     ScrollTrigger.create({ start: 0, end: 'max', onUpdate: (s) => gsap.set('.progress', { scaleX: s.progress }) });
+    // while a stage is pinned it paints its colour below itself, so a phone's collapsing address bar never shows the next scene
+    ScrollTrigger.getAll().filter((t) => t.pin).forEach((t) => ScrollTrigger.create({ trigger: t.trigger, start: () => t.start, end: () => t.end, toggleClass: { targets: t.pin, className: 'is-pinned' } }));
   });
 
   loader().then(heroIntro);
@@ -178,10 +180,12 @@ function setupNav() {
       const y = self.scroll();
       if (y > 120 && self.direction === 1 && !document.body.classList.contains('menu-open')) gsap.to(nav, { yPercent: -100, duration: 0.4, ease: 'zOut', overwrite: true });
       else if (self.direction === -1 || y < 120) gsap.to(nav, { yPercent: 0, duration: 0.4, ease: 'zOut', overwrite: true });
-      // theme: the section under the nav, with per-scene overrides stored on the element
+      // theme: read after this frame's scene updates have run, so it never lags behind
+      cancelAnimationFrame(state.navRaf); state.navRaf = requestAnimationFrame(() => {
       const el = document.elementsFromPoint(window.innerWidth / 2, 36).find((n) => n.closest && n.closest('[data-theme]') && !n.closest('.nav'));
       const sec = el && el.closest('section, footer');
       if (sec) state.setTheme(sec.dataset.navTheme || sec.dataset.theme);
+      });
     },
   });
 }
@@ -303,7 +307,7 @@ function sceneGlobe(desk, L) {
   } });
   // render only while any part of the scene is on screen
   ScrollTrigger.create({ trigger: sec, start: 'top bottom', end: 'bottom top', onToggle: (s) => state.globe.setActive(s.isActive), onRefresh: (s) => state.globe.setActive(s.isActive) });
-  tl.fromTo('.globe__stage', { backgroundColor: '#E9EAE6' }, { backgroundColor: '#1F2B27', duration: 0.15 }, 0)
+  tl.fromTo('.globe__stage', { backgroundColor: '#E9EAE6', '--sb': '#E9EAE6' }, { backgroundColor: '#1F2B27', '--sb': '#1F2B27', duration: 0.15 }, 0)
     .fromTo('.globe__seed', { autoAlpha: 1, scale: 1 }, { autoAlpha: 0, scale: 0.92, duration: 0.12 }, 0.04)
     .fromTo(head.lines, { yPercent: 105 }, { yPercent: 0, duration: 0.08, stagger: 0.02, ease: 'zOut' }, 0.14)
     .fromTo('.globe__count', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.06 }, 0.18)
@@ -328,7 +332,7 @@ function sceneProjects(desk, L) {
     onLeave: () => gsap.set('.proj__stage', { autoAlpha: 0 }), onEnterBack: () => gsap.set('.proj__stage', { autoAlpha: 1 }),
     onUpdate: (s) => { nEl.textContent = s.progress < 0.36 ? 1 : s.progress < 0.7 ? 2 : 3; },
   } });
-  tl.set('.proj__stage', { backgroundColor: bgs[0] }, 0)
+  tl.set('.proj__stage', { backgroundColor: bgs[0], '--sb': bgs[0] }, 0)
     .fromTo('.proj__frame', { clipPath: 'inset(0% 0% 0% 0% round 0px)' }, { clipPath: frame, duration: 0.12, ease: 'zInOut' }, 0)
     .fromTo(nameSplits[0].chars, { yPercent: 110 }, { yPercent: 0, duration: 0.08, stagger: 0.004, ease: 'zOut' }, 0.06)
     .fromTo(items[0], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.06 }, 0.1)
@@ -336,7 +340,7 @@ function sceneProjects(desk, L) {
   nameSplits.slice(1).forEach((s) => gsap.set(s.chars, { yPercent: 110 }));
   [1, 2].forEach((i) => {
     const at = i === 1 ? 0.33 : 0.62;
-    tl.to('.proj__stage', { backgroundColor: bgs[i], duration: 0.12 }, at)
+    tl.to('.proj__stage', { backgroundColor: bgs[i], '--sb': bgs[i], duration: 0.12 }, at)
       .to(imgs[i - 1], { yPercent: -30, scale: 1.08, duration: 0.14, ease: 'zInOut' }, at)
       .to(imgs[i], { yPercent: 0, duration: 0.14, ease: 'zInOut' }, at)
       .to(nameSplits[i - 1].chars, { yPercent: -110, duration: 0.07, stagger: 0.003, ease: 'zInOut' }, at)

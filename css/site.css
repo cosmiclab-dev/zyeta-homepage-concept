@@ -430,7 +430,7 @@ section { position: relative; z-index: 2; }
 
 /* ============ SHARED ACROSS PAGES ============ */
 /* concept label */
-.concept { position: fixed; z-index: 90; left: max(12px, env(safe-area-inset-left, 0px)); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); margin: 0; padding: 8px 12px; border-radius: 999px; background: var(--ink); color: var(--white); font: 400 12px/1.3 "Untitled Sans", Arial, sans-serif; pointer-events: none; box-shadow: 0 0 0 1px rgba(255,255,255,.18); }
+.concept { position: fixed; z-index: 90; left: max(12px, env(safe-area-inset-left, 0px)); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); margin: 0; padding: 6px 10px; border-radius: 999px; background: rgba(14,15,14,.86); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); color: var(--white); font: 400 11px/1.3 "Untitled Sans", Arial, sans-serif; pointer-events: none; box-shadow: 0 0 0 1px rgba(255,255,255,.18); }
 
 /* page transition: twelve panels */
 .pt { position: fixed; inset: 0; z-index: 95; display: none; grid-template-columns: repeat(12, 1fr); pointer-events: none; }
@@ -471,3 +471,33 @@ html.pt-in .pt i { transform: scaleY(1); }
 @media (min-width: 1024px) { .foot__cta { grid-template-columns: 8fr 4fr; align-items: end; } .foot__cta .btn { justify-self: end; } }
 .rule { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: currentColor; opacity: .2; transform-origin: left; }
 .tnum { font-variant-numeric: tabular-nums; }
+
+/* ============ FIXES: nav colour and phone address bar ============ */
+/* Finished scenes leave an empty wrapper behind. It must not catch the nav's colour probe. */
+.motion .hero, .motion .globe, .motion .proj, .motion .promise, .motion .fit, .motion .voices, .motion .res, .motion .contact { pointer-events: none; }
+.motion .hero__stage, .motion .globe__stage, .motion .proj__stage, .motion .promise__stage,
+.motion .fit__stage, .motion .voices__stage, .motion .res__stage, .motion .contact__stage { pointer-events: auto; }
+/* Pinned stages carry their colour below the fold for when the address bar collapses. */
+.motion .hero__stage, .motion .promise__stage, .motion .res__stage { --sb: var(--gypsum); }
+.motion .globe__stage, .motion .fit__stage, .motion .voices__stage, .motion .contact__stage { --sb: var(--slate); }
+.motion .proj__stage { --sb: #4A3B34; }
+.motion .is-pinned { box-shadow: 0 30vh 0 0 var(--sb); }
+/* globe backdrop */
+.motion .globe__stage::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(60% 50% at 50% 52%, rgba(181,228,140,.07), transparent 70%); }
+
+/* phones: keep bottom-aligned scene content clear of the concept label */
+@media (max-width: 767px) {
+  .motion .hero__stage { padding-bottom: 72px; }
+  .motion .proj__list { bottom: 64px; }
+  .motion .proj__count { top: 84px; }
+  .motion .fit__num { bottom: 64px; }
+  .motion .fit__bar { bottom: 52px; }
+  .motion .voices__tabs { bottom: 60px; }
+  .motion .res__list { bottom: 104px; }
+  .motion .res__all { bottom: 56px; }
+  .motion .contact__stage { padding-bottom: 64px; }
+  .foot__base { padding-bottom: 40px; }
+}
+
+@media (pointer: coarse) { .motion .globe__hint { display: none; } }
+@media (min-width: 1024px) { .motion .globe__hint { left: 60%; } }

@@ -7,12 +7,12 @@ const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const seg = (p, a, b) => clamp((p - a) / (b - a));
 
 export function createGlobe(canvas, { tiles, frontIndex = 0, featureIndex = 7, mobile = false, onHover }) {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !mobile, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1 : 2));
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 200);
+  const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 200);
   const group = new THREE.Group();
   scene.add(group);
 
@@ -29,6 +29,36 @@ export function createGlobe(canvas, { tiles, frontIndex = 0, featureIndex = 7, m
     return texCache.get(src);
   };
 
+  // Tile material: rounded corners with anti-aliased edges and a soft vignette.
+  const tileAspect = 1.5;
+  const vert = `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;
+  const frag = `
+    uniform sampler2D map; uniform float opacity; uniform float lum; uniform float radius; uniform float aspect;
+    varying vec2 vUv;
+    void main() {
+      vec2 p = (vUv - 0.5) * vec2(aspect, 1.0);
+      vec2 b = vec2(aspect, 1.0) * 0.5 - radius;
+      vec2 q = abs(p) - b;
+      float d = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - radius;
+      float aa = max(fwidth(d) * 1.2, 0.0005);
+      float edge = 1.0 - smoothstep(-aa, aa, d);
+      vec4 c = texture2D(map, vUv);
+      float v = 1.0 - smoothstep(0.25, 0.85, length((vUv - 0.5) * vec2(1.1, 1.3)));
+      c.rgb *= lum * mix(0.82, 1.0, v);
+      gl_FragColor = vec4(c.rgb, edge * opacity);
+      #include <colorspace_fragment>
+    }`;
+  const makeMat = (map) => new THREE.ShaderMaterial({
+    uniforms: { map: { value: map }, opacity: { value: 0 }, lum: { value: 1 }, radius: { value: 0.06 }, aspect: { value: tileAspect } },
+    vertexShader: vert, fragmentShader: frag, transparent: true, depthWrite: false,
+  });
+
+  // A hairline orbit ring around the sphere, like a dimension line around a drawing.
+  const ringGeo = new THREE.BufferGeometry().setFromPoints(Array.from({ length: 241 }, (_, i) => { const a = (i / 240) * Math.PI * 2; return new THREE.Vector3(Math.cos(a) * R * 1.14, Math.sin(a) * R * 1.14, 0); }));
+  const ring = new THREE.Line(ringGeo, new THREE.LineDashedMaterial({ color: 0xb5e48c, dashSize: 0.12, gapSize: 0.18, transparent: true, opacity: 0 }));
+  ring.computeLineDistances();
+  scene.add(ring);
+
   // Rings of curved patches. Each patch is a slice of a sphere, so the photo bends with the globe.
   const rowStep = 0.3;
   const rows = mobile ? [-2, -1, 0, 1, 2] : [-3, -2, -1, 0, 1, 2, 3];
@@ -44,13 +74,13 @@ export function createGlobe(canvas, { tiles, frontIndex = 0, featureIndex = 7, m
     const step = (Math.PI * 2) / n;
     for (let i = 0; i < n; i++) {
       const phiC = frontPhi + i * step + (r % 2 ? step / 2 : 0);
-      const geo = new THREE.SphereGeometry(R, 10, 8, phiC - w / 2, w, theta - baseH / 2, baseH);
+      const geo = new THREE.SphereGeometry(R, 16, 12, phiC - w / 2, w, theta - baseH / 2, baseH);
       let idx;
       if (r === 0 && i === 0) idx = frontIndex;
       else if (r === 0 && i === 7) idx = featureIndex;
       else { idx = k % tiles.length; k++; if (idx === frontIndex || idx === featureIndex) { idx = (idx + 1) % tiles.length; } }
       const tile = tiles[idx];
-      const mat = new THREE.MeshBasicMaterial({ map: getTex(tile.src), transparent: true, opacity: 0, side: THREE.FrontSide, depthWrite: true });
+      const mat = makeMat(getTex(tile.src));
       const m = new THREE.Mesh(geo, mat);
       const dir = new THREE.Vector3(-Math.cos(phiC) * s, Math.cos(theta), Math.sin(phiC) * s);
       m.userData = { dir, phi: phiC, cap: tile.cap || '', delay: Math.random() * 0.12 + (Math.abs(r) * 0.03) };
@@ -77,7 +107,7 @@ export function createGlobe(canvas, { tiles, frontIndex = 0, featureIndex = 7, m
     const visW = tileW / frameFrac;
     nearZ = R + visW / (2 * t * camera.aspect);
     // far: the whole sphere fills about 72% of the shorter side
-    const fit = mobile ? 0.86 : 0.72;
+    const fit = mobile ? 0.8 : 0.66;
     const byH = (2 * R) / (fit * 2 * t);
     const byW = (2 * R) / (fit * 2 * t * camera.aspect);
     farZ = Math.max(byH, byW);
@@ -116,6 +146,9 @@ export function createGlobe(canvas, { tiles, frontIndex = 0, featureIndex = 7, m
     group.rotation.y = turn + (target - turn) * pDive;
     group.rotation.x = 0.12 * pIn * (1 - pDive);
 
+    // shift the sphere clear of the headline while it is on show; centred for both handoffs
+    const off = pIn * (1 - pDive);
+    camera.setViewOffset(w, h, mobile ? 0 : -w * 0.1 * off, mobile ? -h * 0.07 * off : -h * 0.02 * off, w, h);
     const z = nearZ + (farZ - nearZ) * pIn;
     camera.position.set(0, 0, z + ((R + 0.55) - z) * pDive);
     camera.lookAt(0, 0, 0);
@@ -128,9 +161,12 @@ export function createGlobe(canvas, { tiles, frontIndex = 0, featureIndex = 7, m
       const appear = clamp((pIn * 1.25) - m.userData.delay);
       const isFront = m === group.userData.front;
       const a = isFront ? 1 : appear;
-      m.material.opacity = a * clamp(facing * 2.2 + 0.25, 0, 1);
-      const lum = 0.28 + 0.72 * clamp(facing, 0, 1);
-      m.material.color.setScalar(m === hovered ? 1 : lum);
+      // tiles turning away fade out before they shear at the edge of the sphere
+      const f = clamp((facing - 0.12) / 0.38);
+      m.material.uniforms.opacity.value = a * f * f * (3 - 2 * f);
+      m.material.uniforms.lum.value = m === hovered ? 1.05 : 0.42 + 0.58 * clamp(facing, 0, 1);
+      // corners square up as the camera dives into the feature tile, to meet the full-bleed photo
+      m.material.uniforms.radius.value = 0.06 * (1 - pDive);
       const sc = m === hovered ? 1.05 : 1;
       m.scale.setScalar(m.scale.x + (sc - m.scale.x) * 0.15);
     }
@@ -138,12 +174,14 @@ export function createGlobe(canvas, { tiles, frontIndex = 0, featureIndex = 7, m
     // hover
     if (pointer.in && !mobile && pDive < 0.05) {
       ray.setFromCamera(pointer, camera);
-      const hit = ray.intersectObjects(meshes, false).find((h) => h.object.material.opacity > 0.4);
+      const hit = ray.intersectObjects(meshes, false).find((h) => h.object.material.uniforms.opacity.value > 0.4);
       const next = hit ? hit.object : null;
       if (next !== hovered) { hovered = next; }
       onHover && onHover(hovered && hovered.userData.cap ? { text: hovered.userData.cap, x: pointer.cx, y: pointer.cy } : null);
     } else if (hovered) { hovered = null; onHover && onHover(null); }
 
+    ring.material.opacity = 0.5 * pIn * (1 - clamp(pDive * 3));
+    ring.rotation.z = idle * 0.6 + pTurn * 0.4;
     renderer.render(scene, camera);
   }
 
