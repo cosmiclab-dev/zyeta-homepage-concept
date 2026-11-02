@@ -202,7 +202,11 @@ function loader() {
   document.body.style.overflow = 'hidden';
   const thumbs = $$('.loader__strip img').filter((i) => getComputedStyle(i).display !== 'none');
   const key = $('.loader__strip .is-key');
-  const tl = gsap.timeline({ defaults: { ease: 'zOut' } });
+  // wait for the strip's own photos (max 2.5s) so the first frames are never blank on a slow network
+  gsap.set(thumbs, { clipPath: 'inset(100% 0 0 0)' });
+  const thumbsReady = Promise.race([Promise.all(thumbs.map((i) => i.decode().catch(() => {}))), new Promise((r) => setTimeout(r, 2500))]);
+  const tl = gsap.timeline({ defaults: { ease: 'zOut' }, paused: true });
+  thumbsReady.then(() => tl.play());
   tl.addLabel('lines', 0)
     .from('.cols span', { scaleY: 0, transformOrigin: 'top', duration: 0.9, stagger: 0.03 }, 'lines')
     .fromTo(thumbs, { clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)', duration: 0.7, stagger: 0.05, ease: 'zMask' }, 0.4)
@@ -350,10 +354,10 @@ function scenePromise(desk, L) {
   gsap.set('.promise__text', { autoAlpha: 1 });
   tl.fromTo('.promise__disc', { y: () => innerHeight * 1.02 }, { y: () => -innerHeight * 0.32, duration: 0.4, ease: 'zInOut' }, 0)
     .fromTo('.promise__bg', { scale: 1 }, { scale: 1.12, duration: 0.4 }, 0)
-    .to('.promise__arc', { autoAlpha: 0, duration: 0.06 }, 0.34)
-    .fromTo(h.lines, { yPercent: 105 }, { yPercent: 0, duration: 0.1, stagger: 0.025, ease: 'zOut' }, 0.34)
-    .fromTo('.promise__body', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.04 }, 0.42)
-    .fromTo(words, { opacity: 0.14 }, { opacity: 1, duration: 0.02, stagger: 0.42 / words.length }, 0.46)
+    .to('.promise__arc', { autoAlpha: 0, duration: 0.06 }, 0.27)
+    .fromTo(h.lines, { yPercent: 105 }, { yPercent: 0, duration: 0.1, stagger: 0.025, ease: 'zOut' }, 0.25)
+    .fromTo('.promise__body', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.04 }, 0.36)
+    .fromTo(words, { opacity: 0.14 }, { opacity: 1, duration: 0.02, stagger: 0.46 / words.length }, 0.4)
     .to('.promise__text', { y: () => -innerHeight * 0.12, autoAlpha: 0, duration: 0.08 }, 0.94);
 }
 
