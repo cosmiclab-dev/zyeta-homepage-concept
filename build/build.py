@@ -7,7 +7,7 @@ import html, os, re, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from content import *
 
-V = '7'  # asset version, bump to skip browser caches
+V = '8'  # asset version, bump to skip browser caches
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 e = html.escape
 PROJ = {p['slug']: p for p in PROJECTS}

@@ -255,6 +255,7 @@ function sceneHero(desk, L) {
   const frame = desk ? 'inset(28% 35% 28% 35% round 6px)' : 'inset(30% 12% 30% 12% round 6px)';
   const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
     trigger: sec, start: 'top top', end: L('+=120%', '+=100%'), pin: '.hero__stage', scrub: 0.8,
+    onLeave: () => gsap.set('.hero__stage', { autoAlpha: 0 }), onEnterBack: () => gsap.set('.hero__stage', { autoAlpha: 1 }),
     onUpdate: (s) => { sec.dataset.navTheme = s.progress > 0.45 ? 'light' : 'dark'; },
   } });
   tl.to(lines[0], { y: () => -innerHeight * 0.3, autoAlpha: 0, duration: 0.35 }, 0)
@@ -297,6 +298,7 @@ function sceneGlobe(desk, L) {
   const head = splitLines($('.globe__head h2'));
   const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
     trigger: sec, start: 'top top', end: L('+=220%', '+=180%'), pin: '.globe__stage', scrub: 0.8,
+    onLeave: () => gsap.set('.globe__stage', { autoAlpha: 0 }), onEnterBack: () => gsap.set('.globe__stage', { autoAlpha: 1 }),
     onUpdate: (s) => { state.globe.setProgress(s.progress); sec.dataset.navTheme = s.progress < 0.12 ? 'light' : 'dark'; },
   } });
   // render only while any part of the scene is on screen
@@ -323,9 +325,10 @@ function sceneProjects(desk, L) {
   const nEl = $('.proj__n');
   const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
     trigger: sec, start: 'top top', end: L('+=270%', '+=240%'), pin: '.proj__stage', scrub: 0.8,
+    onLeave: () => gsap.set('.proj__stage', { autoAlpha: 0 }), onEnterBack: () => gsap.set('.proj__stage', { autoAlpha: 1 }),
     onUpdate: (s) => { nEl.textContent = s.progress < 0.36 ? 1 : s.progress < 0.7 ? 2 : 3; },
   } });
-  tl.set(sec, { backgroundColor: bgs[0] }, 0)
+  tl.set('.proj__stage', { backgroundColor: bgs[0] }, 0)
     .fromTo('.proj__frame', { clipPath: 'inset(0% 0% 0% 0% round 0px)' }, { clipPath: frame, duration: 0.12, ease: 'zInOut' }, 0)
     .fromTo(nameSplits[0].chars, { yPercent: 110 }, { yPercent: 0, duration: 0.08, stagger: 0.004, ease: 'zOut' }, 0.06)
     .fromTo(items[0], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.06 }, 0.1)
@@ -333,7 +336,7 @@ function sceneProjects(desk, L) {
   nameSplits.slice(1).forEach((s) => gsap.set(s.chars, { yPercent: 110 }));
   [1, 2].forEach((i) => {
     const at = i === 1 ? 0.33 : 0.62;
-    tl.to(sec, { backgroundColor: bgs[i], duration: 0.12 }, at)
+    tl.to('.proj__stage', { backgroundColor: bgs[i], duration: 0.12 }, at)
       .to(imgs[i - 1], { yPercent: -30, scale: 1.08, duration: 0.14, ease: 'zInOut' }, at)
       .to(imgs[i], { yPercent: 0, duration: 0.14, ease: 'zInOut' }, at)
       .to(nameSplits[i - 1].chars, { yPercent: -110, duration: 0.07, stagger: 0.003, ease: 'zInOut' }, at)

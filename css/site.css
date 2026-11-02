@@ -268,7 +268,14 @@ section { position: relative; z-index: 2; }
 }
 
 /* hero */
-.motion .hero { background: var(--gypsum); }
+.motion .hero { background: transparent; z-index: 6; }
+.motion .hero__stage { background: var(--gypsum); }
+/* Scene handoffs: each pinned scene overlaps the one before by exactly one screen,
+   so its pin starts on the same frame the previous pin ended on. Backgrounds live on
+   the pinned stages, and a finished stage is hidden once its pin releases. */
+.motion .globe { background: transparent; margin-top: -100svh; z-index: 5; }
+.motion .proj { margin-top: -100svh; z-index: 4; }
+.motion .promise { margin-top: -100svh; z-index: 3; }
 .motion .hero__stage { padding: 0 var(--m) 40px; display: flex; flex-direction: column; justify-content: flex-end; }
 .motion .hero__media { will-change: clip-path; }
 .motion .hero__title .line { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
@@ -287,8 +294,9 @@ section { position: relative; z-index: 2; }
 .motion.no-webgl .globe__grid { display: grid; position: absolute; inset: 200px var(--m) 40px; overflow: hidden; }
 
 /* projects */
-.motion .proj__stage { display: block; background: transparent; }
-.motion .proj { background: #4A3B34; }
+.motion .proj__stage { display: block; }
+.motion .proj { background: transparent; }
+.motion .proj__stage { background-color: #4A3B34; }
 .motion .proj__names { display: block; position: absolute; inset: 0; pointer-events: none; z-index: 3; }
 .motion .proj__names p { position: absolute; left: 0; right: 0; top: 76%; transform: translateY(-58%); text-align: center; white-space: nowrap; color: var(--white); font-size: var(--display); line-height: .9; letter-spacing: -0.045em; }
 .motion .proj__frame { display: block; position: absolute; inset: 0; clip-path: inset(0 0 0 0); z-index: 2; }
@@ -302,7 +310,8 @@ section { position: relative; z-index: 2; }
 @media (max-width: 1023px) { .motion .proj__names p { top: 66%; font-size: clamp(56px, 15vw, 120px); } .motion .proj__count { bottom: auto; top: 84px; } }
 
 /* promise */
-.motion .promise { background: var(--gypsum); }
+.motion .promise { background: transparent; }
+.motion .promise__stage { background: var(--gypsum); }
 .motion .promise__bg { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .motion .promise__disc { display: block; position: absolute; left: 50%; top: 0; width: 260vmax; height: 260vmax; margin-left: -130vmax; border-radius: 50%; background: var(--gypsum); z-index: 2; }
 .motion .promise__arc { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
